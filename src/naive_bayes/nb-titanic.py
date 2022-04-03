@@ -6,8 +6,19 @@ Source: https://www.kaggle.com/datasets/brendan45774/test-file?resource=download
 """
 import pandas as pd
 import numpy as np
+import platform
+import os.path as path
 
-base = pd.read_csv("C:\\Users\\5220203\Documents\\topicos-avancados-ml\\Data\\titanic-tested.csv")
+source_file = 'titanic-tested.csv'
+
+file_path = ''
+if ( 'Linux' in platform.system() ):
+    file_path = path.abspath(path.join(__file__ ,"../"*3)) + '/data/' + source_file
+elif ( 'Windows' in platform.system()):
+    file_path = path.abspath(path.join(__file__ ,"../"*3)) + '\\data\\' + source_file
+
+base = pd.read_csv(file_path)
+
 # print(base.head())
 
 base['Age'].fillna((base['Age'].mean()), inplace=True)
