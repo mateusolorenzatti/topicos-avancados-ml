@@ -1,6 +1,7 @@
 """
 1 - Naive Bayes 
 
+Author: Mateus Orlandin Lorenzatti (https://github.com/mateusolorenzatti)
 Source: https://www.kaggle.com/datasets/brendan45774/test-file?resource=download
 
 """

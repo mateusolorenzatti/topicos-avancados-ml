@@ -1,15 +1,18 @@
 """
 2 - Decision Tree Classifier 
 
+Author: Mateus Orlandin Lorenzatti (https://github.com/mateusolorenzatti)
 Source: https://www.kaggle.com/datasets/kamilpytlak/personal-key-indicators-of-heart-disease?resource=download
 
 """
+# --------------------------------------------------
 
 import pandas as pd
 import matplotlib.pyplot as plt
 import platform
 import os.path as path
 
+# --------------------------------------------------
 # Abre o arquivo local em ../../data
 source_file = 'heart-desease.csv'
 
@@ -70,7 +73,7 @@ print('-'*50)
 print('Accuracy Score -> ', accuracy_score(y_test, y_pred_hd))
 print('Test Size -> ', test_size*100, '%')
 print('-'*50)
-print('Confusion Matrix -> \n ', confusion_matrix(y_test,y_pred_hd))
+print('Confusion Matrix -> \n', confusion_matrix(y_test,y_pred_hd))
 print('-'*50)
 
 # print(arvore_doenca_cardiaca.feature_importances_)
