@@ -2,9 +2,9 @@
 6 - Linear Regression
 
 Author: Mateus Orlandin Lorenzatti (https://github.com/mateusolorenzatti)
-Source: https://www.kaggle.com/datasets/impapan/student-performance-data-set
+Source: https://www.kaggle.com/datasets/avikasliwal/used-cars-price-prediction?select=train-data.csv
 
-Levantamento da nota final dos alunos
+Predição de valor de automóveis usados
 
 """
 
@@ -22,18 +22,17 @@ def abrirArquivoLocal(source_file):
     elif ( 'Windows' in platform.system()):
         file_path = path.abspath(path.join(__file__ ,"../"*3)) + '\\data\\' + source_file
 
-    return pd.read_csv(file_path, sep=';')
+    return pd.read_csv(file_path)
 
 def preparaBasesSimples(base):
     # print(base.head())
 
-    classe = base.iloc[:,32].values
-
-    # Campo StudyTime
-    preditores = base.iloc[:,13:14].values
-
-    # print(preditores)
+    classe = base.iloc[:,13:14].values
     # print(classe)
+
+    # Campo Year
+    preditores = base.iloc[:,3:4].values
+    # print(preditores)
 
     from sklearn.model_selection import train_test_split
     X_train,X_test,y_train,y_test=train_test_split(preditores,classe,test_size=0.25, random_state=42)
@@ -41,23 +40,24 @@ def preparaBasesSimples(base):
 
 def preparaBases(base):
     # print(base.head())
-
-    classe = base.iloc[:,32].values
-
-    # Elimina a classe da base
-    preditores = base.iloc[:,0:30].values
-
-    # print(preditores)
+    
+    classe = base.iloc[:,13:14].values
     # print(classe)
+
+    preditores = base.iloc[:,2:12].values
+    # print(preditores)
 
     from sklearn.preprocessing import LabelEncoder
     labelEncoder = LabelEncoder()
 
-    labeled_p = [0,1,3,4,5,8,9,10,11,15,16,17,18,19,20,21,22]
+    labeled_p = [0,3,4,5]
     for i in labeled_p:
         preditores[:,i] = labelEncoder.fit_transform(preditores[:,i])
 
-    # print(preditores)
+    preditores['Mileage'] = preditores['Mileage'].str.replace(' km/kg', '')
+    print(preditores['Mileage'])
+
+    # ToDo: Descobir como remover a unidade do campo
 
     from sklearn.model_selection import train_test_split
     X_train,X_test,y_train,y_test=train_test_split(preditores,classe,test_size=0.25, random_state=42)
@@ -179,17 +179,17 @@ def regressao_svm(X_train,X_test,y_train, y_test):
     print("")
 
 def main():
-    base = abrirArquivoLocal('student-performance-por.csv')
+    base = abrirArquivoLocal('used-cars-price-prediction.csv')
 
     X_train,X_test,y_train,y_test=preparaBasesSimples(base)
     regressao_linear(X_train,X_test,y_train,y_test)
 
     X_train,X_test,y_train,y_test=preparaBases(base)
-    regressao_linear(X_train,X_test,y_train,y_test)
-    regressao_polinomial(X_train,X_test,y_train,y_test)
-    regressao_arvores_decisao(X_train,X_test,y_train,y_test)
-    regressao_random_forest(X_train,X_test,y_train,y_test)
-    regressao_svm(X_train,X_test,y_train,y_test)
+    # regressao_linear(X_train,X_test,y_train,y_test)
+    # regressao_polinomial(X_train,X_test,y_train,y_test)
+    # regressao_arvores_decisao(X_train,X_test,y_train,y_test)
+    # regressao_random_forest(X_train,X_test,y_train,y_test)
+    # regressao_svm(X_train,X_test,y_train,y_test)
 
 if __name__ == '__main__':
     main()
